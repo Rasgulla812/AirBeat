@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090b12" />
+    <title>AirBeat — Play the air. Feel the beat.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <nav class="topbar">
+        <a class="brand" href="/" aria-label="AirBeat home">
+          <span class="brand-mark">◉</span>
+          <span>AirBeat</span>
+        </a>
+        <div class="topbar-meta">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span id="connection-label">ready to play</span>
+          <span class="version">v1.0</span>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div class="eyebrow"><span>01</span> motion instrument</div>
+        <h1>Play the air.<br /><span>Feel the beat.</span></h1>
+        <p class="intro">Turn your hands into a drum kit. Your webcam sees the hit, your browser makes the sound.</p>
+        <div class="hero-actions">
+          <button class="primary-button" id="camera-button">
+            <span class="button-icon">◉</span>
+            <span id="camera-button-label">Start camera</span>
+          </button>
+          <button class="ghost-button" id="sound-button">Enable sound</button>
+        </div>
+      </section>
+
+      <section class="playground" aria-label="Air drum instrument">
+        <div class="stage-card">
+          <div class="stage-header">
+            <div>
+              <span class="section-label">tracking window</span>
+              <h2>Move your hands into frame</h2>
+            </div>
+            <div class="tracking-status" id="tracking-status">
+              <span class="status-pip"></span>
+              <span>waiting for camera</span>
+            </div>
+          </div>
+          <div class="camera-stage" id="camera-stage">
+            <video id="camera" autoplay playsinline muted></video>
+            <canvas id="hand-overlay"></canvas>
+            <div class="model-loading" id="model-loading" aria-live="polite">
+              <span class="loading-spinner"></span>
+              <strong>Loading hand model</strong>
+              <span>Almost ready to play</span>
+            </div>
+            <div class="drum-layout" aria-label="Virtual drum kit zones">
+              <div class="instrument-zone cymbal-zone crash-zone" data-zone="crash">
+                <span class="instrument-icon">◯</span><span>crash</span>
+              </div>
+              <div class="instrument-zone cymbal-zone ride-zone" data-zone="ride">
+                <span class="instrument-icon">◯</span><span>ride</span>
+              </div>
+              <div class="instrument-zone drum-zone tom-zone" data-zone="tom">
+                <span class="instrument-icon">◉</span><span>tom</span>
+              </div>
+              <div class="instrument-zone drum-zone snare-zone" data-zone="snare">
+                <span class="instrument-icon">◎</span><span>snare</span>
+              </div>
+              <div class="instrument-zone drum-zone kick-zone" data-zone="kick">
+                <span class="instrument-icon">●</span><span>kick</span>
+              </div>
+              <div class="instrument-zone cymbal-zone hat-zone" data-zone="hat">
+                <span class="instrument-icon">◉</span><span>hi-hat</span>
+              </div>
+            </div>
+            <div class="camera-empty" id="camera-empty">
+              <div class="camera-orbit"><span>✦</span></div>
+              <strong>Your camera view lives here</strong>
+              <span>Start the camera, or use the pads below</span>
+            </div>
+            <div class="stage-grid"></div>
+            <div class="coordinate-label top-left">x: <span id="coord-x">--</span> &nbsp; y: <span id="coord-y">--</span></div>
+            <div class="coordinate-label bottom-right">HAND / <span id="hand-label">NONE</span></div>
+          </div>
+          <div class="stage-footer">
+            <span><kbd>SPACE</kbd> kick &nbsp; <kbd>J</kbd> snare &nbsp; <kbd>K</kbd> hi-hat</span>
+            <span id="fps-label">model offline</span>
+          </div>
+        </div>
+
+        <aside class="kit-panel">
+          <div class="kit-heading">
+            <span class="section-label">the kit</span>
+            <span class="kit-count">04 sounds</span>
+          </div>
+          <div class="pads" id="pads">
+            <button class="pad kick" data-sound="kick" data-key="SPACE">
+              <span class="pad-top"><span class="pad-number">01</span><span class="equipment-symbol">●</span></span><span class="pad-name">kick drum</span><span class="pad-key">SPACE</span>
+            </button>
+            <button class="pad snare" data-sound="snare" data-key="J">
+              <span class="pad-top"><span class="pad-number">02</span><span class="equipment-symbol">◎</span></span><span class="pad-name">snare</span><span class="pad-key">J</span>
+            </button>
+            <button class="pad hat" data-sound="hat" data-key="K">
+              <span class="pad-top"><span class="pad-number">03</span><span class="equipment-symbol">◉</span></span><span class="pad-name">hi-hat</span><span class="pad-key">K</span>
+            </button>
+            <button class="pad tom" data-sound="tom" data-key="L">
+              <span class="pad-top"><span class="pad-number">04</span><span class="equipment-symbol">◉</span></span><span class="pad-name">tom drum</span><span class="pad-key">L</span>
+            </button>
+          </div>
+          <div class="volume-control">
+            <div class="control-label"><span>master volume</span><strong id="volume-value">72%</strong></div>
+            <input type="range" id="volume" min="0" max="100" value="72" aria-label="Master volume" />
+          </div>
+          <div class="tip"><span>✦</span><p>Tip: hit downwards quickly for the most natural trigger.</p></div>
+        </aside>
+      </section>
+
+      <footer class="footer">
+        <span>Built with <strong>Web Audio API</strong> + <strong>TensorFlow.js</strong></span>
+        <span>Play the air. Feel the beat. <span class="footer-symbol">↗</span></span>
+      </footer>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose@0.0.7/dist/handpose.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
