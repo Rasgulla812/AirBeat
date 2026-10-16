@@ -7,7 +7,7 @@ virtual drum kit. Move your fingers through the on-screen instrument zones and
 play synthesized drums in real time—no sticks, hardware, or installation
 required.
 
-![AirBeat prototype](./docs/prototype.png)
+![AirBeat application](./docs/airbeat-clean.png)
 
 > **Prototype status:** AirBeat is an interactive browser prototype. It uses
 > TensorFlow.js HandPose for tracking and the Web Audio API for sound
