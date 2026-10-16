@@ -1,7 +1,7 @@
 :root {
-  --bg: #090b12;
-  --panel: #11141e;
-  --panel-light: #171a26;
+  --bg: #070a11;
+  --panel: #101521;
+  --panel-light: #171d2b;
   --line: #292d3b;
   --muted: #838797;
   --text: #f1f0ec;
@@ -13,17 +13,33 @@
 
 * { box-sizing: border-box; }
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(ellipse 75% 48% at 50% -10%, rgba(42, 62, 95, .34), transparent 68%),
+    radial-gradient(ellipse 42% 30% at 87% 52%, rgba(39, 67, 83, .11), transparent 72%),
+    radial-gradient(ellipse 48% 35% at 8% 88%, rgba(24, 50, 66, .12), transparent 72%),
+    var(--bg);
   color: var(--text);
   font-family: "Space Grotesk", sans-serif;
   margin: 0;
   min-width: 320px;
 }
 body::before {
-  background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-  background-size: 54px 54px;
+  background-image:
+    linear-gradient(rgba(154, 178, 214, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(154, 178, 214, .035) 1px, transparent 1px);
+  background-size: 64px 64px;
   content: "";
   inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: -1;
+}
+body::after {
+  background: linear-gradient(115deg, transparent 0 38%, rgba(255,255,255,.018) 50%, transparent 62%);
+  background-size: 280% 100%;
+  content: "";
+  inset: 0;
+  opacity: .35;
   pointer-events: none;
   position: fixed;
   z-index: -1;
@@ -52,7 +68,7 @@ h1 span { color: var(--lime); }
 .ghost-button { background: transparent; border-color: var(--line); color: var(--text); }
 .ghost-button:hover { border-color: var(--muted); }
 .playground { display: grid; gap: 18px; grid-template-columns: minmax(0, 1.8fr) minmax(270px, .72fr); }
-.stage-card, .kit-panel { background: rgba(17,20,30,.88); border: 1px solid var(--line); }
+.stage-card, .kit-panel { background: linear-gradient(145deg, rgba(20,26,40,.92), rgba(11,15,24,.92)); border: 1px solid rgba(84,97,122,.32); box-shadow: 0 20px 60px rgba(0,0,0,.16); }
 .stage-card { min-width: 0; padding: 24px; }
 .stage-header, .kit-heading, .control-label, .stage-footer, .footer { align-items: center; display: flex; justify-content: space-between; }
 .stage-header { margin-bottom: 20px; }
